@@ -1,3 +1,7 @@
+/**
+ * @author Edwaki
+ * @date 3.7.2022
+ */
 const formatNumber = (num: number) => {
     return parseFloat(num.toFixed(8)).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 };

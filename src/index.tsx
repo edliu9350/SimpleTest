@@ -1,3 +1,7 @@
+/**
+ * @author Edwaki
+ * @date 3.7.2022
+ */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './assets/css/index.css';

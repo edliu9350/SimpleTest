@@ -1,3 +1,7 @@
+/**
+ * @author Edwaki
+ * @date 3.7.2022
+ */
 import { render, screen } from '@testing-library/react';
 import App from './App';
 

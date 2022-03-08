@@ -1,3 +1,7 @@
+/**
+ * @author Edwaki
+ * @date 3.7.2022
+ */
 import React, { useState, Fragment } from "react";
 import {Link} from 'react-router-dom';
 import Login from '../../components/login';
@@ -8,19 +12,22 @@ import {useLocation} from 'react-router-dom';
 
 
 export default (props: any) => {
-  const [login_open, setLoginOpen] = useState(false);
+  const [login_open, setLoginOpen] = useState(false); //state for dialog-opened
+  /*Event handler of login button */
   const onOpenLogin = () => {
     setLoginOpen(true);
   }
+  /*Closing handler of login dialog */
   const onCloseLogin = () => {
     setLoginOpen(false);
   }
+  /*Handler of logging out */
   const onLogout = () => {
     setToken({});
   }
-  const token: any = useStore(state => state.token);
+  const token: any = useStore(state => state.token);  //token for authentication
   const setToken: any = useStore(state => state.setToken);
-  const location = useLocation();
+  const location = useLocation(); //current path
   return (
     <div>
       <nav className="bg-gray-800/70">

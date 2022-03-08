@@ -1,3 +1,7 @@
+/**
+ * @author Edwaki
+ * @date 3.7.2022
+ */
 import {Fragment, useState} from 'react';
 import { Menu, Transition, Dialog } from "@headlessui/react"
 import { ChevronDownIcon } from '@heroicons/react/solid';
@@ -6,8 +10,8 @@ import axios from 'axios';
 import utils from '../../utils';
 
 export default (props: any) => {
-    const USD2CRT = 0, CRT2USD = 1;
-    const [tradeDir, setTradeDir] = useState(CRT2USD);
+    const USD2CRT = 0, CRT2USD = 1; //trading direction constants($->Crypto, Crypto->$)
+    const [tradeDir, setTradeDir] = useState(CRT2USD);  //Trade Direction State
     const [amount, setAmount] = useState('0');
     const [selectedIndex, setSelectedIndex] = useState(0);
     const queryClient = useQueryClient();

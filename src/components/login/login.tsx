@@ -1,3 +1,7 @@
+/**
+ * @author Edwaki
+ * @date 3.7.2022
+ */
 import {Fragment, useState} from 'react';
 import {Dialog, Transition} from '@headlessui/react';
 import utils from '../../utils';
@@ -6,14 +10,16 @@ import useStore from '../../store';
 export default (props: any) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    //state variable for handling login-errors
     const [erros, setErros] = useState({
         email: '',
         password: ''
     });
-    const setToken = useStore(state => state.setToken);
+    const setToken = useStore(state => state.setToken); //Authentication Token
     const handleSubmit = (e: any) => {
         e.preventDefault();
     }
+    //handle for login
     const handleLogin = () => {
         if(password != '' && utils.validateEmail(email)){
             setToken({

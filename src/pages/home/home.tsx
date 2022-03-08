@@ -1,3 +1,7 @@
+/**
+ * @author Edwaki
+ * @date 3.7.2022
+ */
 import {useState, useEffect, useMemo, Fragment} from 'react';
 import {useTable, useSortBy} from 'react-table';
 import {useQuery, useQueryClient} from 'react-query';
@@ -8,14 +12,14 @@ import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid';
 import {Link} from 'react-router-dom';
 
 export default () => {
+    //use react-table for table ui.
     const columns = useMemo(() => [
           {
-            Header: '#'
+            Header: 'No'
           },
           {
-              Header: 'Name',
+              Header: 'name',
               accessor: (data: any) => {
-                //console.log(data);
                 return (
                   <div className='flex'>
                     <img src={data.image} className="w-8" />
@@ -100,13 +104,13 @@ export default () => {
           }
       ]
     , []);
-    const numRowsPerPage = 10;
+    const numRowsPerPage = 10;    //number of visible rows per page in the table
 
-    const queryClient = useQueryClient();
-    const query_data: any = queryClient.getQueryData('assets');
-    const [orderBy, setOrderBy] = useState('current_price');
-    const [order, setOrder] = useState('desc');
-    const [curPage, setCurPage] = useState(1);
+    const queryClient = useQueryClient(); //client for react-query
+    const query_data: any = queryClient.getQueryData('assets'); //list of crypto assets
+    const [orderBy, setOrderBy] = useState('current_price');  //variable for sorting the table
+    const [order, setOrder] = useState('desc');               //variable for sorting the table
+    const [curPage, setCurPage] = useState(1);                //state for current page number
 
     const {
         getTableProps,
@@ -119,33 +123,40 @@ export default () => {
         data: query_data || []
     }, useSortBy);
 
+    /*comparing subfunction for sorting crypto assets */
     const descendingComparator = (a: any, b: any, orderBy: string) => {
-        if (b.original[orderBy] < a.original[orderBy]) {
-          return -1;
-        }
-        if (b.original[orderBy] > a.original[orderBy]) {
-          return 1;
-        }
-        return 0;
+      if (b.original[orderBy] < a.original[orderBy]) {
+        return -1;
       }
-    
-      const getComparator = (order: string, orderBy: string) => {
-        return order === 'desc'
-        ? (a: any, b: any) => descendingComparator(a, b, orderBy)
-        : (a: any, b: any) => -descendingComparator(a, b, orderBy);
-      };
-    
-      const stableSort = (array: any, comparator: any) => {
-        const stabilizedThis = array.map((el: any, index: number) => [el, index]);
-        stabilizedThis.sort((a: any, b: any) => {
-          const order = comparator(a[0], b[0]);
-          if (order !== 0) {
-            return order;
-          }
-          return a[1] - b[1];
-        });
-        return stabilizedThis.map((el: any) => el[0]);
+      if (b.original[orderBy] > a.original[orderBy]) {
+        return 1;
       }
+      return 0;
+    }
+  
+    /*comparing function for sorting crypto assets */
+    const getComparator = (order: string, orderBy: string) => {
+      return order === 'desc'
+      ? (a: any, b: any) => descendingComparator(a, b, orderBy)
+      : (a: any, b: any) => -descendingComparator(a, b, orderBy);
+    };
+  
+    /**
+     * 
+     * @param array cryptoassets
+     * @param comparator comparing function
+     */
+    const stableSort = (array: any, comparator: any) => {
+      const stabilizedThis = array.map((el: any, index: number) => [el, index]);
+      stabilizedThis.sort((a: any, b: any) => {
+        const order = comparator(a[0], b[0]);
+        if (order !== 0) {
+          return order;
+        }
+        return a[1] - b[1];
+      });
+      return stabilizedThis.map((el: any) => el[0]);
+    }
 
     const sortableColumns = ['name', 'symbol', 'current_price', 'market_cap', 'price_change_percentage_24h'];
     const handleSortTable = (columnId: string) => {
@@ -176,8 +187,8 @@ export default () => {
       setCurPage(page < totPage ? page + 1 : page);
     }
     return (
-        <div className='flex justify-center mt-5'>
-          <div className='border w-3/5'>
+        <div className='flex justify-center mt-5 mb-5'>
+          <div className='border min-w-[60%]'>
             <table {...getTableProps()} className="w-full divide-y divide-gray-200">
                 <thead className="bg-gray-200/30">
                 {headerGroups.map(headerGroup => (
